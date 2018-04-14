@@ -5,6 +5,14 @@ var Counter = React.createClass({
         };
     },
 
+    componentWillMount: function() {
+        console.log('[componentWillMount]: odpalam się przed renderowaniem');
+    },
+
+    componentDidMount: function() {
+        console.log('[componentDidMount]: odpalam się po renderowaniu');
+    },
+
     increment: function() {
         this.setState({
             counter: this.state.counter + 1
@@ -18,10 +26,22 @@ var Counter = React.createClass({
     },
 	
     render: function() {
-        return React.createElement('div', {onClick: this.increment},
-            React.createElement('span', {}, 'Licznik ' + this.state.counter)
+        console.log('[render]: renderuje...')
+        return React.createElement('div', {},
+            React.createElement('button', {onClick: this.increment}, '+'),
+            React.createElement('span', {}, 'Licznik ' + this.state.counter),
+            React.createElement('button', {onClick: this.decrement}, '-')
         );
     }
 });
 
-console.log(Counter);
+var counters = React.createElement('div', {},
+    React.createElement(Counter),
+    React.createElement(Counter),
+    React.createElement(Counter)
+);
+
+ReactDOM.render(
+    counters,
+    document.getElementById('app')
+);
